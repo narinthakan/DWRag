@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>🤖 แชทบอทจาก requirements.txt</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; }
+    .chat-container { width: 500px; margin: 50px auto; background: white; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    #chatBox { border: 1px solid #ddd; padding: 10px; height: 300px; overflow-y: scroll; background: #fafafa; margin-bottom: 15px; }
+    .user { color: blue; margin: 5px 0; }
+    .bot { color: green; margin: 5px 0; }
+    input[type="text"] { width: 75%; padding: 8px; border: 1px solid #ddd; border-radius: 5px; }
+    button { padding: 8px 15px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+  </style>
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("message").value;
+      if (!msg.trim()) return;
+
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML += "<p class='user'><b>คุณ:</b> " + msg + "</p>";
+
+      const response = await fetch("/core/chat-query/", {
+        method: "POST",
+        headers: {"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},
+        body: "message=" + encodeURIComponent(msg)
+      });
+
+      const data = await response.json();
+      chatBox.innerHTML += "<p class='bot'><b>บอท:</b> " + (data.answer || data.error) + "</p>";
+      document.getElementById("message").value = "";
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</head>
+<body>
+  <div class="chat-container">
+    <h2>🤖 แชทบอทจาก <code>requirements.txt</code></h2>
+    <div id="chatBox"></div>
+    <input type="text" id="message" placeholder="พิมพ์ข้อความ..." />
+    <button onclick="sendMessage()">ส่ง</button>
+  </div>
+</body>
+</html>

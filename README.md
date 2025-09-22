@@ -34,3 +34,21 @@ class Document(models.Model):
 8. **เชื่อมต่อกับ Generative Model**: ส่งเอกสารที่ค้นคืนได้ไปยังโมเดลสร้างข้อความ (เช่น ผ่าน LangChain) เพื่อสร้างคำตอบ
 9. **สร้าง API/Frontend**: เปิดให้ใช้งาน RAG workflow ผ่าน Django views, REST API หรือ frontend ตามต้องการ
 10. **ทดสอบและนำไปใช้งาน**: ทดสอบ pipeline ทั้งหมดและนำระบบขึ้นใช้งานจริง
+
+
+**การติดตั้ง**
+git clone https://github.com/yourname/DWRag.git
+
+cd DWRag
+
+**สร้าง Virtual Environment**
+python -m venv venv
+
+.\venv\Scripts\activate   
+
+**ติดตั้ง Dependencies**
+pip install -r requirements.txt
+
+**รันเซิร์ฟเวอร์**
+python manage.py runserver
+

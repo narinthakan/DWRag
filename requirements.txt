@@ -1,0 +1,20 @@
+[
+  {"question": "สวัสดี", "answer": "สวัสดีครับ มีอะไรให้ช่วยไหม?"},
+  {"question": "คุณชื่ออะไร", "answer": "ฉันคือแชทบอทผู้ช่วยอัจฉริยะง้าาาา"},
+  {"question": "สมัครสมาชิกยังไง", "answer": "กดปุ่ม สมัครสมาชิก ที่หน้าแรก แล้วกรอกข้อมูล"}
+]
+
+
+
+
+Django==5.2.6
+psycopg2-binary==2.9.9
+pgvector==0.2.5
+google-generativeai==0.7.2
+langchain-huggingface==0.1.2
+sentence-transformers==3.2.1
+transformers==4.44.2
+torch>=2.2.0
+numpy>=1.26.0
+python-dotenv==1.0.1
+

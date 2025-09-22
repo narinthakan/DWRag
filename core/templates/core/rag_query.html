@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>DWRag - Chatbot</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f0f6fb;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      margin-top: 60px;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #0d6efd;
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 15px;
+      border: 1px solid #d0e3f8;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 5px rgba(13, 110, 253, 0.3);
+    }
+
+    button {
+      background: #0d6efd;
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0b5ed7;
+    }
+
+    h2 {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: #333;
+    }
+
+    #answer {
+      margin-top: 10px;
+      border: 1px solid #d0e3f8;
+      border-radius: 10px;
+      padding: 15px;
+      min-height: 60px;
+      background: #f8fbff;
+      color: #333;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+  </style>
+  <script>
+    async function askQuestion(event) {
+      event.preventDefault();
+
+      const query = document.getElementById("query").value;
+      if (!query.trim()) {
+        alert("กรุณาใส่คำถาม");
+        return;
+      }
+
+      try {
+        const response = await fetch("/rag_query/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: query })
+        });
+
+        if (!response.ok) {
+          throw new Error("HTTP " + response.status);
+        }
+
+        const data = await response.json();
+        document.getElementById("answer").innerText =
+          data.answer || "ไม่มีคำตอบ";
+      } catch (err) {
+        document.getElementById("answer").innerText =
+          "❌ เกิดข้อผิดพลาด: " + err.message;
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>🔎 DWRag Chatbot</h1>
+    <form onsubmit="askQuestion(event)">
+      <input type="text" id="query" name="query" placeholder="พิมพ์คำถามของคุณ...">
+      <button type="submit">ถามเลย</button>
+    </form>
+
+    <h2>คำตอบ:</h2>
+    <div id="answer"></div>
+  </div>
+</body>
+</html>

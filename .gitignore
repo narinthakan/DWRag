@@ -1,0 +1,13 @@
+# Python cache
+*.pyc
+__pycache__/
+
+# Virtual env
+venv/
+
+# DB local
+db.sqlite3
+pgdata/
+
+# Env file
+.env
